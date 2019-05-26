@@ -7,6 +7,6 @@ export PYBEG_BOT_TOKEN="XXXXX:XXXXXXXXXXX"
 export PYBEG_BOT_TEST_TOKEN="XXXXX:XXXXXXXXXXX"
 """
 
-default_bot = ''
-bot = os.getenv('PYBEG_BOT_TOKEN', default_bot)
-bot_test = os.getenv('PYBEG_BOT_TOKEN', default_bot)
+default_bot = ""
+bot = os.getenv("PYBEG_BOT_TOKEN", default_bot)
+bot_test = os.getenv("PYBEG_BOT_TOKEN", default_bot)

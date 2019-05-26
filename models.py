@@ -4,11 +4,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from config import url
+
 Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True)
     msg_count = Column(Integer)
@@ -20,8 +21,9 @@ class User(Base):
         self.ro_level = 0
 
     def __repr__(self):
-        return "User ID: {0}\nMessage count: {1}\nRO level: {2}\n". \
-            format(self.user_id, self.msg_count, self.ro_level)
+        return "User ID: {0}\nMessage count: {1}\nRO level: {2}\n".format(
+            self.user_id, self.msg_count, self.ro_level
+        )
 
 
 engine = create_engine(url)
