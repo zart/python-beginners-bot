@@ -71,7 +71,7 @@ def paste(message):
     new_paste = make_paste(source_text, source.from_user.first_name)
     if not new_paste:
         return
-    bot.reply_to(source, text=new_paste)
+    bot.reply_to(source, text=new_paste, disable_web_page_preview=True)
     bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
     logger.info(
         "User {0} has requested a paste version of a message {1}".format(
