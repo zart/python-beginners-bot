@@ -1,0 +1,6 @@
+
+\.docker-compose\.env
+
+\.idea/
+
+redis-data/
