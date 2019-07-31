@@ -10,6 +10,7 @@ from models import Session, User
 
 # Initializes the bot
 bot = telebot.TeleBot(config.bot_token, threaded=False)
+bot.skip_pending = True
 bot_id = bot.get_me().id
 
 # Initializes the logger
