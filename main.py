@@ -110,7 +110,7 @@ def justify(message):
         tomorrow = datetime.date.today() + datetime.timedelta(1)
         unix_time = tomorrow.strftime("%s")
         bot.restrict_chat_member(
-            chat_id=config.chat_id, user_id=source.from_user_id, until_date=unix_time
+            chat_id=config.chat_id, user_id=source.from_user.id, until_date=unix_time
         )
     else:
         bot.reply_to(source, text="Lucky one")
