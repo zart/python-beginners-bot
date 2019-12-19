@@ -14,7 +14,7 @@ from utils import (
     get_user,
     logger,
     validate_command,
-    watching_newcommers,
+    watching_newcomers,
     make_paste,
     validate_paste,
     validate_document,
@@ -29,6 +29,7 @@ def ban_invited_bots(message):
         return
 
     new_users.ban_bots(message)
+    new_users.restrict(message)
     bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
 
 
@@ -154,8 +155,16 @@ def document_to_paste(message):
     ]
 )
 def scan_for_spam(message):
-    if watching_newcommers(message.from_user.id):
+    messages_count = watching_newcomers(message.from_user.id)
+
+    if messages_count < 10:
         monitor.scan_contents(message)
+    elif messages_count == 10:
+        bot.restrict_chat_member(
+            chat_id=config.chat_id,
+            user_id=message.from_user.id,
+            can_send_other_messages=True,
+        )
 
 
 # Callback handler for the admins' judgment

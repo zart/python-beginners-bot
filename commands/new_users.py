@@ -34,3 +34,25 @@ def ban_bots(message):
 
     session.commit()
     session.close()
+
+
+def restrict(message):
+    """
+    Forbid new users from sending inline bot spam.
+    """
+    session = Session()
+
+    for new_member in message.new_chat_members:
+        member = session.query(User).filter(User.user_id == new_member.id).one_or_none()
+
+        # Skip restriction if user already have messages.
+        if member is not None and member.msg_count >= 10:
+            continue
+
+        bot.restrict_chat_member(
+            chat_id=config.chat_id,
+            user_id=new_member.id,
+            can_send_other_messages=False,
+        )
+
+    session.close()

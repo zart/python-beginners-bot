@@ -102,7 +102,7 @@ def validate_command(
     return True
 
 
-def watching_newcommers(user_id):
+def watching_newcomers(user_id):
     """Checks if a user with user_id that has posted a message requires scanning
     i.e. whether the user has posted less than 10 messages
     """
@@ -115,12 +115,12 @@ def watching_newcommers(user_id):
         session.add(user_obj)
     elif user_obj.msg_count > 10:
         session.close()
-        return False
+        return user_obj.msg_count
 
     user_obj.msg_count += 1
     session.commit()
     session.close()
-    return True
+    return user_obj.msg_count
 
 
 def perfect_justice():
