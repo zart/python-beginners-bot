@@ -5,7 +5,7 @@ services:
       - db
       - redis
     restart: always
-    build: .
+    image: docker.pkg.github.com/vlade11115/python-beginners-garbotdge/garbotdge:1.0
     env_file:
       - .docker-compose.env
   db:
