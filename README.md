@@ -12,8 +12,7 @@ Set parameters in `.docker-compose.env`
 `docker-compose down`
 # Build and publish image
 ```
-docker build .
-docker tag {image_id} docker.pkg.github.com/vlade11115/python-beginners-garbotdge/garbotdge:{version_id}
+docker build -t docker.pkg.github.com/vlade11115/python-beginners-garbotdge/garbotdge:{version_id} .
 docker push docker.pkg.github.com/vlade11115/python-beginners-garbotdge/garbotdge
 
 ```
