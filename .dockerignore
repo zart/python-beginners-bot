@@ -1,3 +1,5 @@
 \.idea/
 redis-data/
 postgres-data/
+\.github/
+\.docker-compose\.env

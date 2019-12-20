@@ -15,8 +15,6 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
     env_file:
       - .docker-compose.env
-    ports:
-      - "8003:5432"
   redis:
     image: redis:5-alpine
     restart: always
