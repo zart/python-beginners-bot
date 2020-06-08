@@ -13,7 +13,7 @@ import json
 from logging import basicConfig, getLogger
 from logging.config import fileConfig, dictConfig
 from .config import get_config
-from .bot import get_bot
+from .bot import Bot
 
 log = getLogger(__name__)
 
@@ -48,10 +48,5 @@ def run():
     # TODO: check connection to database and redis
 
     # instantiate and run the bot
-    bot = get_bot(config)
-    while 1:
-        try:
-            bot.polling(timeout=3, none_stop=True)
-            break  # bot.polling swallows KeyboardInterrupt to exit cleanly
-        except Exception:
-            log.exception("Error")
+    bot = Bot(config)
+    bot.run()
