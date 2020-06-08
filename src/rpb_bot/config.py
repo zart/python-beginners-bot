@@ -88,7 +88,7 @@ def get_config_envvars(prefix=None, env=os.environ):
         return {}
 
     d = len(prefix)
-    envvars = {k[d:].lower(): v for k, v in env.items() if k.startswith(prefix)}
+    envvars = {k[d:].lower(): env[k] for k in env if k.startswith(prefix)}
 
     return envvars
 
