@@ -33,7 +33,7 @@ def run():
                 fileConfig(log_path)
                 log.debug("Configured logging from INI: %s", log_path)
     except Exception:
-        basicConfig("%(loglevel)-5s [%(name)s] %(message)s")
+        basicConfig(format="%(loglevel)-5s [%(name)s] %(message)s")
         log.debug("Falling back on basic logging config", exc_info=True)
 
     # instantiate the bot
