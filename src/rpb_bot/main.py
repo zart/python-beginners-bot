@@ -1,6 +1,6 @@
 "Main entry"
 
-import os
+import os, sys
 
 # init sentry as early as possible, but only when requested with env var
 if "SENTRY_SDK" in os.environ:
@@ -13,11 +13,14 @@ import json
 from logging import basicConfig, getLogger
 from logging.config import fileConfig, dictConfig
 from .config import get_config
+from .bot import get_bot
 
 log = getLogger(__name__)
 
 
 def run():
+    "Main entry point"
+
     # configuration
     config = get_config()
 
@@ -36,6 +39,19 @@ def run():
         basicConfig(format="%(loglevel)-5s [%(name)s] %(message)s")
         log.debug("Falling back on basic logging config", exc_info=True)
 
-    # instantiate the bot
-    # check connection to database and redis
-    # start the bot if everything is fine
+    # validate configuration
+    if not config["token"]:
+        print("No token configured. Ask @BotFather for one and provide it")
+        sys.exit(1)
+
+    # TODO: check that other settings ain't missing or invalid
+    # TODO: check connection to database and redis
+
+    # instantiate and run the bot
+    bot = get_bot(config)
+    while 1:
+        try:
+            bot.polling(timeout=3, none_stop=True)
+            break  # bot.polling swallows KeyboardInterrupt to exit cleanly
+        except Exception:
+            log.exception("Error")

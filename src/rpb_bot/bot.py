@@ -1,1 +1,11 @@
-# TODO: move here old bot object into it's own factory
+"Bot itself"
+
+import telebot  # NOTE: pyTelegramBotAPI, not telebot
+
+
+def get_bot(config):
+    "Bot factory"
+
+    bot = telebot.TeleBot(config['token'], threaded=False)
+
+    return bot
