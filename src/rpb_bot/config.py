@@ -108,7 +108,7 @@ def get_config_cmdline(parser=None, defaults=None):
 
     if parser is None:  # special case
         return {}
-    
+
     if parser is DEFAULT:
         parser = get_parser()
 
@@ -120,16 +120,30 @@ def get_config_cmdline(parser=None, defaults=None):
     return args
 
 
-def get_config(path=None, section="bot", parser=DEFAULT, envprefix="RPB_BOT_"):
+def get_config(
+    path=None,
+    section="bot",
+    parser=DEFAULT,
+    envprefix="RPB_BOT_",
+    environ=os.environ,
+    defaults=DEFAULTS,
+):
     "Combine configuration from multiple sources"
 
-    config = {}
+    config = dict.fromkeys(defaults, DEFAULT)
+    cmd = get_config_cmdline(parser, config)
+    path = cmd["config"] if cmd["config"] is not DEFAULT else path
+    ini = get_config_ini(path, section)
+    env = get_config_envvars(envprefix, environ)
 
-    config.update(get_config_ini(path, section))
-    config.update(get_config_envvars(envprefix))
-    config.update(get_config_cmdline(parser, config))
+    # merge sources by priority and unknown entries are ignored
+    for key in defaults:
+        if config.get(key, DEFAULT) is DEFAULT:
+            for src in (cmd, ini, env, defaults):
+                if src.get(key, DEFAULT) is not DEFAULT:
+                    config[key] = src[key]
+                    break
 
     # TODO: fix types. ini and envvars return Mapping[str, str], cmdline doesnt
 
     return config
-
