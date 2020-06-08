@@ -75,6 +75,10 @@ def get_parser(*args, version=None, **kwargs):
 
 class DEFAULT(object):
     "Sentinel value for config functions"
+    __repr__ = __str__ = lambda self: "<DEFAULT>"
+
+
+DEFAULT = DEFAULT()
 
 
 def get_config_envvars(prefix=None, env=os.environ):
@@ -132,7 +136,8 @@ def get_config(
 
     config = dict.fromkeys(defaults, DEFAULT)
     cmd = get_config_cmdline(parser, config)
-    path = cmd["config"] if cmd["config"] is not DEFAULT else path
+    cfg = cmd["config"]
+    path = cfg if cfg is not DEFAULT else path or defaults["config"]
     ini = get_config_ini(path, section)
     env = get_config_envvars(envprefix, environ)
 
